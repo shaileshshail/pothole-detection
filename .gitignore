@@ -1,0 +1,10 @@
+node_modules/
+node_modules/
+express/.env
+server/.env
+runs/
+server_copy/
+.venev
+dl/
+old/
+todo.txt
