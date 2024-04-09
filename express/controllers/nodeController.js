@@ -5,12 +5,12 @@ const pool = require('../database/database')
 //@access private
 const keepAlive = async(req,res)=>{
     console.log("keep alive")
-    const {id,ip,port,lat,long,loc} = req.body;
+    const {id,name,ip,port,lat,long,loc} = req.body;
     const [data] = await pool.query(`SELECT * FROM CURRENT_NODES WHERE id=?;`,[req.body.id])
     console.log(data)
     if(!data.length){
         console.log('hi')
-        await pool.query(`INSERT INTO CURRENT_NODES(id,ip,port,latitude,longitude,loc) VALUES(?,?,?,?,?,?);`,[id,ip,port,lat,long,loc])
+        await pool.query(`INSERT INTO CURRENT_NODES(id,name,ip,port,latitude,longitude,loc) VALUES(?,?,?,?,?,?,?);`,[id,name,ip,port,lat,long,loc])
     }else{
         await pool.query(`UPDATE CURRENT_NODES SET lastseen=current_timestamp() WHERE id=?;`,[id]);
     }

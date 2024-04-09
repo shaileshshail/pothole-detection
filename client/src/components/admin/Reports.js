@@ -56,8 +56,19 @@ const Reports = () => {
         <div><a href={'https://maps.google.com/?q='+tableProps.row.original.latitude+','+tableProps.row.original.longitude }>Map location</a></div>
       )
     },
+    {
+      Header: "Edit",
+      Cell: tableProps =>(
+        <div><button onClick={()=>deleteOne(tableProps.row.original.id)}>Delete</button>
+        </div>
+      )
+    }
   ], []);
-
+  const deleteOne =(id)=>{
+    if(window.confirm('Press OK to delete report :'+id)){
+      deleteReport(id);
+      setReload(!reload)}
+  }
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data,defaultColumn: {
     size: 400, //starting column size
     minSize: 50, //enforced during column resizing
@@ -71,7 +82,7 @@ const Reports = () => {
       console.log(val.data.data);
     }
     load();
-  }, []);
+  }, [reload]);
 
   return (
     <>

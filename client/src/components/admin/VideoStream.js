@@ -28,6 +28,7 @@ const VideoStream = () => {
       <table>
         <tr>
           <th>Id</th>
+          <th>Name</th>
           <th>IP Address</th>
           <th>Port</th>
           <th>Latitude</th>
@@ -37,6 +38,7 @@ const VideoStream = () => {
          return (
           <tr onClick={()=>onclick(element)} style={element?.id==host?.id?{backgroundColor:'green'}:{}}>
             <td>{element.id}</td>
+            <td>{element.name}</td>
             <td>{element.ip}</td>
             <td>{element.port}</td>
             <td>{element.latitude}</td>

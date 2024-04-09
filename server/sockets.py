@@ -26,7 +26,7 @@ async def startStream(sid):
     r = redis.Redis(host='localhost', port=6379, db=0)
 
     while sid in connected_clients:
-        frame = read_cam.fromRedis(r,'masked_img')
+        frame = read_cam.fromRedis(r,'masked_stream')
 
         _, buffer = cv2.imencode('.jpg', frame)
         frame_bytes = base64.b64encode(buffer.tobytes()).decode('utf-8')

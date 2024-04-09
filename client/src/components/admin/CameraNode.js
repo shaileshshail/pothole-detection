@@ -28,8 +28,11 @@ const CameraNode = (props) => {
         <>
       <div className="video-container">
         <div className="video-stream">
-          <h1>Video Stream from host id : {props.data.id}</h1>
-          <p>{props.data.latitude +"  "+props.data.longitude }</p>
+          <h1>Video Stream from host : {props?.data.name}</h1>
+          <p>Last seen time : {props?.data.lastseen}</p>
+          <p>Last seen location :<a target="_blank" href={'https://maps.google.com/?q='+props?.data.latitude+','+props?.data.longitude }>Maps</a>
+</p>
+
           {videoSrc && <img src={videoSrc} alt="Video Stream" />}
         </div>
         <div className="video-controls">

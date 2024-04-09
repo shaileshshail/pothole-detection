@@ -1,6 +1,6 @@
 from ultralyticsplus import YOLO, render_result
 import cv2,numpy as np
-import read_cam
+import write_cam
 import redis
 import requests
 import gps
@@ -15,12 +15,14 @@ class VideoConnect:
 
     def getStream(self):
         r = redis.Redis(host='localhost', port=6379, db=0)
+        cam = cv2.VideoCapture(0,cv2.CAP_DSHOW)
         print("Connect to redis from detection")
         while(True): 
 
             # Capture the video frame 
-            frame = read_cam.fromRedis(r,'image')
-
+            ret, frame = cam.read()
+            if not ret:
+                continue
             results = self.model.predict(frame,verbose=False)
             # parse results
             result = results[0]
@@ -31,6 +33,7 @@ class VideoConnect:
             masks = result.masks # for segmentation models
             masked_frame = render_result(model=self.model, image=frame, result=result)
             masked_frame =  np.array(masked_frame)
+            write_cam.toRedis(r,masked_frame,'masked_stream')
             for score in scores.tolist():
                 if score>0.7:
                     self.postData(frame,masked_frame)
